@@ -33,17 +33,17 @@ Now, you can connect the C client worker. The worker can be launched with the fo
 ## Scenario
 
 Small (unsecure) Login process just to get used to the C SDK that at the moment only supports one client. 
-	1) Client requests LoginManager component owner entity from Server.
-	2) Client triggers Login command onto LoginManager component.
-	3) Server validates Login.
-		3.1) Success.
-			3.1.1) Request entity creation to SpatialOS with a Client owned Player Component.
-			3.2.1) Success respond command to Client.
-		3.2) Failure.
-			3.2.1) Failure respond command to Client.
-	4) Server receives SpatialOS entity created callback.
-		4.1) Server triggers Init command onto Player component that is received by the authored Client. 
-		4.2) Client receives command and keeps the EntityId of its Player.
+- Client requests LoginManager component owner entity from Server.
+- Client triggers Login command onto LoginManager component.
+- Server validates Login.
+	- Success.
+		- Request entity creation to SpatialOS with a Client owned Player Component.
+		- Success respond command to Client.
+	- Failure.
+		- Failure respond command to Client.
+- Server receives SpatialOS entity created callback.
+	- Server triggers Init command onto Player component that is received by the authored Client. 
+	- Client receives command and keeps the EntityId of its Player.
 
 ## Snapshot
 
