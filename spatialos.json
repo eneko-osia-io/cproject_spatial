@@ -1,0 +1,12 @@
+{
+    "name": "cproject",
+    "project_version": "1.0.0",
+    "sdk_version": "14.2.0",
+    "dependencies":
+    [
+        {
+            "name": "standard_library",
+            "version": "14.2.0"
+        }
+    ]
+}

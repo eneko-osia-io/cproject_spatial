@@ -1,0 +1,99 @@
+{
+    "__entity_id": "1",
+    "improbable.EntityAcl":
+    {
+        "component_write_acl":
+        [
+            {
+                "key": 50,
+                "value":
+                {
+                    "attribute_set":
+                    [
+                        {
+                            "attribute":
+                            [
+                                "server"
+                            ]
+                        }
+                    ]
+                }
+            },
+
+            {
+                "key": 54,
+                "value":
+                {
+                    "attribute_set":
+                    [
+                        {
+                            "attribute":
+                            [
+                                "server"
+                            ]
+                        }
+                    ]
+                }
+            },
+
+            {
+                "key": 1000,
+                "value":
+                {
+                    "attribute_set":
+                    [
+                        {
+                            "attribute":
+                            [
+                                "server"
+                            ]
+                        }
+                    ]
+                }
+            }
+        ],
+
+        "read_acl":
+        {
+            "attribute_set":
+            [
+                {
+                    "attribute":
+                    [
+                        "server"
+                    ]
+                },
+
+                {
+                    "attribute":
+                    [
+                        "client"
+                    ]
+                }
+            ]
+        }
+    },
+
+    "improbable.Persistence":
+    {
+    },
+
+    "improbable.Position":
+    {
+        "coords":
+        {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+        }
+    },
+
+    "improbable.Metadata":
+    {
+        "entity_type":"LoginManagerEntity"
+    },
+
+    "cproject.LoginComponent":
+    {
+    }
+}

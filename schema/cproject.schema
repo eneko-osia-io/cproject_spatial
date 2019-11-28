@@ -1,0 +1,35 @@
+package cproject;
+
+type LoginRequest
+{
+    string username = 1;
+    string password = 2;
+}
+
+type LoginResponse
+{
+    enum LoginCode
+    {
+        OK = 0;
+        ERROR = 1;
+    }
+
+    LoginCode code = 1;
+    option<uint32> session_id = 2;
+}
+
+type Void
+{
+}
+
+component LoginComponent
+{
+    id = 1000;
+    command LoginResponse login(LoginRequest);
+}
+
+component Player
+{
+    id = 1001;
+    command Void init(Void);
+}

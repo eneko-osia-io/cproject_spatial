@@ -1,0 +1,247 @@
+{
+    "build":
+    {
+        "tasks":
+        [
+            {
+                "name": "Codegen",
+                "steps":
+                [
+                    {
+                        "name": "Code generation",
+                        "command": "cmake",
+                        "arguments":
+                        [
+                            "-E",
+                            "echo",
+                            "No-op."
+                        ]
+                    }
+                ]
+            },
+
+            {
+                "name": "Build",
+                "steps":
+                [
+                    {
+                        "name": "Codegen",
+                        "arguments":
+                        [
+                            "invoke-task",
+                            "Codegen"
+                        ]
+                    },
+
+                    {
+                        "name": "Install dependencies",
+                        "arguments":
+                        [
+                            "worker_package",
+                            "unpack"
+                        ]
+                    },
+
+                    {
+                        "name": "CMake configure",
+                        "command": "cmake",
+                        "arguments":
+                        [
+                            "-E",
+                            "make_directory",
+                            "cmake_build"
+                        ]
+                    },
+
+                    {
+                        "name": "CMake configure for Windows",
+                        "working_path": "cmake_build",
+                        "command": "cmake",
+                        "arguments":
+                        [
+                            "-A",
+                            "x64",
+                            ".."
+                        ],
+                        "target": "windows"
+                    },
+
+                    {
+                        "name": "CMake configure for Linux",
+                        "working_path": "cmake_build",
+                        "command": "cmake",
+                        "arguments":
+                        [
+                            "-DCMAKE_C_FLAGS=-m64",
+                            "-DCMAKE_CXX_FLAGS=-m64",
+                            "-G",
+                            "Unix Makefiles",
+                            ".."
+                        ],
+                        "target": "linux"
+                    },
+
+                    {
+                        "name": "CMake configure for macOS",
+                        "working_path": "cmake_build",
+                        "command": "cmake",
+                        "arguments":
+                        [
+                            "-DCMAKE_OSX_ARCHITECTURES=x86_64",
+                            "-G",
+                            "Unix Makefiles",
+                            ".."
+                        ],
+                        "target": "macos"
+                    },
+
+                    {
+                        "name": "CMake build",
+                        "working_path": "cmake_build",
+                        "command": "cmake",
+                        "arguments":
+                        [
+                            "--build",
+                            ".",
+                            "--target",
+                            "ServerZip"
+                        ]
+                    }
+                ]
+            },
+
+            {
+                "name": "Clean",
+                "steps":
+                [
+                    {
+                        "name": "Dependencies",
+                        "arguments":
+                        [
+                            "worker_package",
+                            "clean"
+                        ]
+                    },
+
+                    {
+                        "name": "CMake build",
+                        "command": "cmake",
+                        "arguments":
+                        [
+                            "-E",
+                            "remove_directory",
+                            "cmake_build"
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+
+    "bridge":
+    {
+        "worker_attribute_set":
+        {
+            "attributes":
+            [
+                "server"
+            ]
+        },
+
+        "entity_interest":
+        {
+            "range_entity_interest":
+            {
+                "radius": 2
+            }
+        },
+
+        "component_delivery":
+        {
+            "default": "RELIABLE_ORDERED",
+            "checkout_all_initially": true
+        }
+    },
+
+    "managed":
+    {
+        "linux":
+        {
+            "artifact_name": "Server@Linux.zip",
+            "command": "./Server",
+            "arguments":
+            [
+                "${IMPROBABLE_RECEPTIONIST_HOST}",
+                "${IMPROBABLE_RECEPTIONIST_PORT}",
+                "${IMPROBABLE_WORKER_ID}"
+            ]
+        },
+
+        "windows":
+        {
+            "artifact_name": "Server@Windows.zip",
+            "command": "./Server.exe",
+            "arguments":
+            [
+                "${IMPROBABLE_RECEPTIONIST_HOST}",
+                "${IMPROBABLE_RECEPTIONIST_PORT}",
+                "${IMPROBABLE_WORKER_ID}"
+            ]
+        },
+
+        "macos":
+        {
+            "artifact_name": "Server@Mac.zip",
+            "command": "./Server",
+            "arguments":
+            [
+                "${IMPROBABLE_RECEPTIONIST_HOST}",
+                "${IMPROBABLE_RECEPTIONIST_PORT}",
+                "${IMPROBABLE_WORKER_ID}"
+            ]
+        }
+    },
+
+    "external":
+    {
+        "local":
+        {
+            "run_type": "EXECUTABLE_ZIP",
+            "windows":
+            {
+                "artifact_name": "Server@Windows.zip",
+                "command": "./Server.exe",
+                "arguments":
+                [
+                    "localhost",
+                    "7777",
+                    "ServerLocalWindows"
+                ]
+            },
+
+            "macos":
+            {
+                "artifact_name": "Server@Mac.zip",
+                "command": "./Server",
+                "arguments":
+                [
+                    "localhost",
+                    "7777",
+                    "ServerLocalMac"
+                ]
+            },
+
+            "linux":
+            {
+                "artifact_name": "Server@Linux.zip",
+                "command": "./Server",
+                "arguments":
+                [
+                    "localhost",
+                    "7777",
+                    "ServerLocalLinux"
+                ]
+            }
+        }
+    }
+}
